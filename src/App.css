@@ -1,0 +1,12 @@
+
+#root {
+  height: 100vh;
+}
+
+.ant-layout {
+  min-height: 100%;
+}
+
+.ant-pro-layout-content {
+  padding: 24px;
+}
