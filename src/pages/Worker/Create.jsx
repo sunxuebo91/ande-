@@ -303,6 +303,90 @@ export default function ResumeCreate() {
             </Select>
           </Form.Item>
 
+          <Form.Item
+            name="orderStatus"
+            label="接单状态"
+            rules={[{ required: true, message: '请选择接单状态' }]}
+          >
+            <Select placeholder="请选择接单状态">
+              <Option value="accepting">想接单</Option>
+              <Option value="not_accepting">不接单</Option>
+              <Option value="on_duty">已上户</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="expectedSalary"
+            label="期望薪资(元)"
+            rules={[
+              { required: true, message: '请输入期望薪资' },
+              { pattern: /^\d+$/, message: '请输入数字' }
+            ]}
+          >
+            <InputNumber 
+              style={{ width: '100%' }}
+              min={0}
+              formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+              placeholder="请输入期望薪资"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="serviceAddress"
+            label="接单地址"
+            rules={[{ required: true, message: '请输入接单地址' }]}
+          >
+            <Input placeholder="请输入详细接单地址" />
+          </Form.Item>
+
+          <Form.Item
+            name="skills"
+            label="技能标签"
+            rules={[{ required: true, message: '请至少选择一项技能' }]}
+          >
+            <Select
+              mode="multiple"
+              placeholder="请选择技能标签"
+              allowClear
+              showArrow
+            >
+              <Option value="maternal_care">母婴护理师</Option>
+              <Option value="lactation">催乳</Option>
+              <Option value="postpartum_meals">月子餐</Option>
+              <Option value="postpartum_recovery">产后修复</Option>
+              <Option value="special_infant_care">特殊婴儿护理</Option>
+              <Option value="medical_background">医疗背景</Option>
+              <Option value="nanny">育婴师</Option>
+              <Option value="early_education">早教</Option>
+              <Option value="baby_food">辅食</Option>
+              <Option value="infant_massage">儿推</Option>
+              <Option value="foreign_language">外语</Option>
+              <Option value="chinese_cuisine">中餐</Option>
+              <Option value="western_cuisine">西餐</Option>
+              <Option value="flour_food">面食</Option>
+              <Option value="driving">驾驶</Option>
+              <Option value="organization">整理收纳</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="workExperienceYears"
+            label="工作经验(年)"
+            rules={[
+              { required: true, message: '请输入工作经验年限' },
+              { type: 'number', min: 0, max: 50, message: '请输入0-50之间的数字' }
+            ]}
+          >
+            <InputNumber 
+              style={{ width: '100%' }}
+              min={0}
+              max={50}
+              precision={0}
+              placeholder="请输入工作年限"
+            />
+          </Form.Item>
+
           <Form.List name="workExperiences">
             {(fields, { add, remove }) => (
               <>

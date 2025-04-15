@@ -9,6 +9,7 @@ import CustomerDetail from './pages/Customer/Detail.jsx';
 import OrderList from './pages/Order/List.jsx';
 import OrderCreate from './pages/Order/Create.jsx';
 import OrderDetail from './pages/Order/Detail.jsx';
+import ResumePage from './pages/Resume/Resume.jsx';
 
 const routes = [
   {
@@ -50,6 +51,10 @@ const routes = [
       {
         path: '/order/detail/:id',
         component: OrderDetail,
+      },
+      {
+        path: '/resume',
+        component: ResumePage,
       },
       // 其他功能路由将在此添加
     ],
