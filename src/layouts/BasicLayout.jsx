@@ -35,7 +35,7 @@ export default function BasicLayout() {
                 { 
                   key: 'worker-create', 
                   label: '创建简历',
-                  onClick: () => window.location.href = '/worker/create'
+                  onClick: () => window.location.pathname = '/worker/create'
                 }
               ]
             },
