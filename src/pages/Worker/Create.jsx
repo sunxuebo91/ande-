@@ -59,10 +59,9 @@ export default function ResumeCreate() {
         >
           {/* 证件上传部分 */}
           <Card title="证件上传" style={{ marginBottom: 24 }}>
-            <Form.Item label="身份证照片" required>
+            <Form.Item label="身份证照片">
               <Form.Item
                 name="idCard"
-                rules={[{ required: true, message: '请上传身份证正反面' }]}
                 noStyle
               >
                 <IDUploader 
@@ -112,10 +111,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="idCard"
                   label="身份证号"
-                  rules={[
-                    { required: true, message: '请输入身份证号' },
-                    { pattern: /^\d{17}[\dXx]$/, message: '身份证号格式不正确' }
-                  ]}
                 >
                   <Input placeholder="请输入身份证号" />
                 </Form.Item>
@@ -125,7 +120,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="birthday"
                   label="生日"
-                  rules={[{ required: true, message: '请选择生日' }]}
                 >
                   <DatePicker 
                     style={{ width: '100%' }}
@@ -138,7 +132,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="marriage"
                   label="婚姻状况"
-                  rules={[{ required: true, message: '请选择婚姻状况' }]}
                 >
                   <Select placeholder="请选择婚姻状况">
                     <Option value="single">未婚</Option>
@@ -179,7 +172,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="registeredAddress"
                   label="户籍地址"
-                  rules={[{ required: true, message: '请输入户籍地址' }]}
                 >
                   <Input placeholder="请输入详细户籍地址" />
                 </Form.Item>
@@ -189,7 +181,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="education"
                   label="学历"
-                  rules={[{ required: true, message: '请选择学历' }]}
                 >
                   <Select placeholder="请选择学历">
                     <Option value="none">无学历</Option>
@@ -209,7 +200,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="ethnicity"
                   label="民族"
-                  rules={[{ required: true, message: '请输入民族' }]}
                 >
                   <Input placeholder="请输入民族" />
                 </Form.Item>
@@ -219,7 +209,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="gender"
                   label="性别"
-                  rules={[{ required: true, message: '请选择性别' }]}
                 >
                   <Select placeholder="请选择性别">
                     <Option value="male">男</Option>
@@ -365,7 +354,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="skills"
                   label="技能标签"
-                  rules={[{ required: true, message: '请至少选择一项技能' }]}
                 >
                   <Select
                     mode="multiple"
@@ -524,19 +512,18 @@ export default function ResumeCreate() {
               </div>
             </Form.Item>
 
-            <Form.Item
-              name="photos"
-              label="个人照片"
-              valuePropName="fileList"
-              getValueFromEvent={(e) => {
-                if (Array.isArray(e)) {
-                  return e;
-                }
-                return e?.fileList;
-              }}
-              extra="最多上传10张，每张不超过5MB，支持JPG/PNG格式"
-              rules={[{ required: true, message: '请上传至少1张个人照片' }]}
-            >
+              <Form.Item
+                name="photos"
+                label="个人照片"
+                valuePropName="fileList"
+                getValueFromEvent={(e) => {
+                  if (Array.isArray(e)) {
+                    return e;
+                  }
+                  return e?.fileList;
+                }}
+                extra="最多上传10张，每张不超过5MB，支持JPG/PNG格式"
+              >
               <Upload
                 customRequest={({ file, onSuccess }) => {
                   setTimeout(() => {
