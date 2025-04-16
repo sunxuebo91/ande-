@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { Card, Form, Input, InputNumber, Button, Select, Upload, DatePicker, message, ConfigProvider, Row, Col } from 'antd';
-import { UploadOutlined, EnvironmentOutlined, PlusOutlined } from '@ant-design/icons';
+import { Card, Form, Input, InputNumber, Button, Select, DatePicker, message, ConfigProvider, Row, Col, Upload } from 'antd';
+import { EnvironmentOutlined, PlusOutlined } from '@ant-design/icons';
+import IDUploader from '@/components/IDUploader';
 import zhCN from 'antd/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
@@ -60,65 +61,21 @@ export default function ResumeCreate() {
           <Card title="证件上传" style={{ marginBottom: 24 }}>
             <Form.Item label="身份证照片" required>
               <Form.Item
-                name="idCardFront"
-                valuePropName="fileList"
-                rules={[{ required: true, message: '请上传身份证正面' }]}
+                name="idCard"
+                rules={[{ required: true, message: '请上传身份证正反面' }]}
                 noStyle
               >
-                <Upload.Dragger
-                  name="front"
-                  action="/api/worker/upload-photo"
-                  headers={{
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    'X-Requested-With': null
+                <IDUploader 
+                  onUploadComplete={(side, file) => {
+                    const current = form.getFieldValue('idCard') || {};
+                    form.setFieldsValue({
+                      idCard: {
+                        ...current,
+                        [side]: file
+                      }
+                    });
                   }}
-                  data={{
-                    workerId: form.getFieldValue('id') || 'new'
-                  }}
-                  listType="picture"
-                  maxCount={1}
-                  beforeUpload={(file) => {
-                    const isLt5M = file.size / 1024 / 1024 < 5;
-                    if (!isLt5M) {
-                      message.error('图片大小不能超过5MB');
-                    }
-                    return isLt5M;
-                  }}
-                  accept="image/*"
-                >
-                  <p className="ant-upload-text">点击或拖拽上传身份证正面</p>
-                  <p className="ant-upload-hint">支持JPG/PNG格式，不超过5MB</p>
-                </Upload.Dragger>
-              </Form.Item>
-
-              <Form.Item
-                name="idCardBack"
-                valuePropName="fileList"
-                rules={[{ required: true, message: '请上传身份证反面' }]}
-                style={{ marginTop: 16 }}
-                noStyle
-              >
-                <Upload.Dragger
-                  name="back"
-                  customRequest={({ file, onSuccess }) => {
-                    setTimeout(() => {
-                      onSuccess("ok", file);
-                    }, 0);
-                  }}
-                  listType="picture"
-                  maxCount={1}
-                  beforeUpload={(file) => {
-                    const isLt5M = file.size / 1024 / 1024 < 5;
-                    if (!isLt5M) {
-                      message.error('图片大小不能超过5MB');
-                    }
-                    return isLt5M;
-                  }}
-                  accept="image/*"
-                >
-                  <p className="ant-upload-text">点击或拖拽上传身份证反面</p>
-                  <p className="ant-upload-hint">支持JPG/PNG格式，不超过5MB</p>
-                </Upload.Dragger>
+                />
               </Form.Item>
             </Form.Item>
           </Card>
