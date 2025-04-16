@@ -28,7 +28,13 @@ export default function ResumeCreate() {
 
   const onFinish = (values) => {
     console.log('Received values:', values);
-    message.success('简历创建成功');
+    // 生成8位随机简历编号
+    const resumeId = Math.floor(10000000 + Math.random() * 90000000).toString();
+    // 保存数据到localStorage
+    localStorage.setItem(`resume_${resumeId}`, JSON.stringify(values));
+    message.success(`简历创建成功，编号: ${resumeId}`);
+    // 跳转到简历详情页
+    window.location.href = `/worker/detail/${resumeId}`;
   };
 
   const handlePreview = async (file) => {
@@ -344,7 +350,6 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="serviceAddress"
                   label="接单地址"
-                  rules={[{ required: true, message: '请输入接单地址' }]}
                 >
                   <Input placeholder="请输入详细接单地址" />
                 </Form.Item>
