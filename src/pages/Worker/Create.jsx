@@ -541,8 +541,8 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="medicalCheckDate"
                   label="体检时间"
-                  disabledDate={current => {
-                    return current && current > dayjs().endOf('day');
+                  fieldProps={{
+                    disabledDate: current => current && current > dayjs().endOf('day')
                   }}
                   style={{ width: 200 }}
                 >

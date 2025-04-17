@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { ConfigProvider } from 'antd';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import BasicLayout from './layouts/BasicLayout';
 import 'antd/dist/reset.css';
@@ -10,9 +11,16 @@ function App() {
   console.log('Current route:', location.pathname);
   
   return (
-    <Routes>
-      <Route path="/*" element={<BasicLayout />} />
-    </Routes>
+    <ConfigProvider
+      theme={{
+        cssVar: true,
+        hashed: false,
+      }}
+    >
+      <Routes>
+        <Route path="/*" element={<BasicLayout />} />
+      </Routes>
+    </ConfigProvider>
   );
 }
 

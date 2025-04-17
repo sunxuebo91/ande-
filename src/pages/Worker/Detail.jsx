@@ -90,33 +90,33 @@ export default function ResumeDetail() {
       ) : (
         <>
           {/* 个人信息部分 */}
-          <Descriptions bordered title="个人信息" style={{ marginBottom: 24 }}>
-            <Descriptions.Item label="简历ID">{renderField(data.id)}</Descriptions.Item>
-            <Descriptions.Item label="姓名">{renderField(data.name)}</Descriptions.Item>
-            <Descriptions.Item label="年龄">{renderField(data.age)}</Descriptions.Item>
-            <Descriptions.Item label="性别">{renderField(data.gender, mappings.gender)}</Descriptions.Item>
-            <Descriptions.Item label="手机号">{renderField(data.phone)}</Descriptions.Item>
-            <Descriptions.Item label="微信号">{renderField(data.wechat)}</Descriptions.Item>
-            <Descriptions.Item label="身份证号">{renderField(data.idCard)}</Descriptions.Item>
-            <Descriptions.Item label="出生日期">{renderField(data.birthday)}</Descriptions.Item>
-            <Descriptions.Item label="婚姻状况">{renderField(data.marriage, mappings.marriage)}</Descriptions.Item>
-            <Descriptions.Item label="宗教信仰">{renderField(data.religion, mappings.religion)}</Descriptions.Item>
-            <Descriptions.Item label="籍贯">{renderField(data.hometown)}</Descriptions.Item>
-            <Descriptions.Item label="户籍地址">{renderField(data.registeredAddress)}</Descriptions.Item>
-            <Descriptions.Item label="学历">{renderField(data.education, mappings.education)}</Descriptions.Item>
-            <Descriptions.Item label="民族">{renderField(data.ethnicity)}</Descriptions.Item>
-            <Descriptions.Item label="生肖">{renderField(data.zodiac, mappings.zodiac)}</Descriptions.Item>
-            <Descriptions.Item label="星座">{renderField(data.constellation, mappings.constellation)}</Descriptions.Item>
+          <Descriptions bordered title="个人信息" style={{ marginBottom: 24 }} column={3}>
+            <Descriptions.Item label="简历ID" span={1}>{renderField(data.id)}</Descriptions.Item>
+            <Descriptions.Item label="姓名" span={1}>{renderField(data.name)}</Descriptions.Item>
+            <Descriptions.Item label="年龄" span={1}>{renderField(data.age)}</Descriptions.Item>
+            <Descriptions.Item label="性别" span={1}>{renderField(data.gender, mappings.gender)}</Descriptions.Item>
+            <Descriptions.Item label="手机号" span={1}>{renderField(data.phone)}</Descriptions.Item>
+            <Descriptions.Item label="微信号" span={1}>{renderField(data.wechat)}</Descriptions.Item>
+            <Descriptions.Item label="身份证号" span={1}>{renderField(data.idCard)}</Descriptions.Item>
+            <Descriptions.Item label="出生日期" span={1}>{renderField(data.birthday)}</Descriptions.Item>
+            <Descriptions.Item label="婚姻状况" span={1}>{renderField(data.marriage, mappings.marriage)}</Descriptions.Item>
+            <Descriptions.Item label="宗教信仰" span={1}>{renderField(data.religion, mappings.religion)}</Descriptions.Item>
+            <Descriptions.Item label="籍贯" span={1}>{renderField(data.hometown)}</Descriptions.Item>
+            <Descriptions.Item label="户籍地址" span={1}>{renderField(data.registeredAddress)}</Descriptions.Item>
+            <Descriptions.Item label="学历" span={1}>{renderField(data.education, mappings.education)}</Descriptions.Item>
+            <Descriptions.Item label="民族" span={1}>{renderField(data.ethnicity)}</Descriptions.Item>
+            <Descriptions.Item label="生肖" span={1}>{renderField(data.zodiac, mappings.zodiac)}</Descriptions.Item>
+            <Descriptions.Item label="星座" span={1}>{renderField(data.constellation, mappings.constellation)}</Descriptions.Item>
           </Descriptions>
 
           {/* 工作信息部分 */}
-          <Descriptions bordered title="工作信息" style={{ marginBottom: 24 }} column={2}>
-            <Descriptions.Item label="工种">{renderField(data.type, mappings.type)}</Descriptions.Item>
-            <Descriptions.Item label="接单状态">{renderField(data.orderStatus, mappings.orderStatus)}</Descriptions.Item>
-            <Descriptions.Item label="期望薪资">{renderField(data.expectedSalary)}元</Descriptions.Item>
-            <Descriptions.Item label="接单地址">{renderField(data.serviceAddress)}</Descriptions.Item>
-            <Descriptions.Item label="从业年限">{renderField(data.workExperienceYears)}年</Descriptions.Item>
-            <Descriptions.Item label="技能标签" span={2}>
+          <Descriptions bordered title="工作信息" style={{ marginBottom: 24 }} column={3}>
+            <Descriptions.Item label="工种" span={1}>{renderField(data.type, mappings.type)}</Descriptions.Item>
+            <Descriptions.Item label="接单状态" span={1}>{renderField(data.orderStatus, mappings.orderStatus)}</Descriptions.Item>
+            <Descriptions.Item label="期望薪资" span={1}>{renderField(data.expectedSalary)}元</Descriptions.Item>
+            <Descriptions.Item label="接单地址" span={1}>{renderField(data.serviceAddress)}</Descriptions.Item>
+            <Descriptions.Item label="从业年限" span={1}>{renderField(data.workExperienceYears)}年</Descriptions.Item>
+            <Descriptions.Item label="技能标签" span={1}>
               {data.skills ? (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {data.skills.map((skill, index) => (
@@ -156,15 +156,15 @@ export default function ResumeDetail() {
             <Card title="工作经历" style={{ marginBottom: 24 }}>
               {data.workExperiences.map((exp, index) => (
                 <div key={index} style={{ marginBottom: 16 }}>
-                  <Descriptions bordered>
-                    <Descriptions.Item label="工作时间">
+                  <Descriptions bordered column={2}>
+                    <Descriptions.Item label="工作时间" span={1}>
                       {exp.period ? (
                         <>
                           {formatYearMonth(exp.period[0], data.createTime)} - {formatYearMonth(exp.period[1], data.createTime)}
                         </>
                       ) : '-'}
                     </Descriptions.Item>
-                    <Descriptions.Item label="工作内容" span={2}>
+                    <Descriptions.Item label="工作内容" span={1}>
                       {renderField(exp.description)}
                     </Descriptions.Item>
                   </Descriptions>
@@ -175,12 +175,12 @@ export default function ResumeDetail() {
 
           {/* 文件信息部分 */}
           <Descriptions bordered title="附件信息" column={2}>
-            <Descriptions.Item label="体检报告">{data.medicalReports ? '已上传' : '-'}</Descriptions.Item>
-            <Descriptions.Item label="体检日期">
+            <Descriptions.Item label="体检报告" span={1}>{data.medicalReports ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="体检日期" span={1}>
               {data.medicalCheckDate ? formatDate(data.medicalCheckDate, data.createTime) : '-'}
             </Descriptions.Item>
-            <Descriptions.Item label="个人照片">{data.photos ? '已上传' : '-'}</Descriptions.Item>
-            <Descriptions.Item label="技能证书">{data.certificates ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="个人照片" span={1}>{data.photos ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="技能证书" span={1}>{data.certificates ? '已上传' : '-'}</Descriptions.Item>
           </Descriptions>
         </>
       )}
