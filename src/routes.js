@@ -1,4 +1,5 @@
 
+import { lazy } from 'react';
 import BasicLayout from './layouts/BasicLayout.jsx';
 import ResumeList from './pages/Worker/List.jsx';
 import Create from './pages/Worker/Create.jsx';
@@ -55,6 +56,14 @@ const routes = [
       {
         path: '/resume',
         component: ResumePage,
+      },
+      {
+        path: '/resumes/create',
+        component: lazy(() => import('./pages/Resume/Create.jsx')),
+      },
+      {
+        path: '/resumes/:id',
+        component: lazy(() => import('./pages/Resume/Detail.jsx')),
       },
       // 其他功能路由将在此添加
     ],

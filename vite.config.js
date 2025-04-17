@@ -17,10 +17,27 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
-    strictPort: true
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   },
   build: {
     outDir: 'dist',
-    assetsInclude: ['**/*.jsx']
+    assetsInclude: ['**/*.jsx'],
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          antd: ['antd'],
+          vendor: ['lodash']
+        }
+      }
+    }
   }
 });
