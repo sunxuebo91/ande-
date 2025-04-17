@@ -151,6 +151,9 @@ export default function ResumeCreate() {
                   label="生日"
                 >
                   <DatePicker 
+                    disabledDate={current => {
+                      return current && current > dayjs().endOf('day');
+                    }}
                     style={{ width: '100%' }}
                     placeholder="请选择生日"
                   />
@@ -440,6 +443,17 @@ export default function ResumeCreate() {
                         rules={[{ required: true, message: '请选择工作时间' }]}
                       >
                         <DatePicker.RangePicker 
+                    disabledDate={current => {
+                      const today = new Date();
+                      const currentYear = current.year();
+                      const currentMonth = current.month();
+                      const todayYear = today.getFullYear();
+                      const todayMonth = today.getMonth();
+                      
+                      // 禁用当前年份的未来月份和所有未来年份
+                      return (currentYear > todayYear) || 
+                             (currentYear === todayYear && currentMonth > todayMonth);
+                    }}
                           picker="month" 
                           style={{ width: '100%' }}
                           format="YYYY年MM月"
@@ -527,6 +541,9 @@ export default function ResumeCreate() {
                 <Form.Item
                   name="medicalCheckDate"
                   label="体检时间"
+                  disabledDate={current => {
+                    return current && current > dayjs().endOf('day');
+                  }}
                   style={{ width: 200 }}
                 >
                   <DatePicker 

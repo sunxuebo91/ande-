@@ -5,6 +5,30 @@ import { Card, Descriptions, Button, Row, Col } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
+const isValidDate = (dateString, createDate) => {
+  if (!dateString || !createDate) return true;
+  return new Date(dateString) <= new Date(createDate);
+};
+
+const formatYearMonth = (dateString, createDate) => {
+  if (!dateString) return '';
+  if (!isValidDate(dateString, createDate)) return '日期无效';
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  return `${year}年${month}月`;
+};
+
+const formatDate = (dateString, createDate) => {
+  if (!dateString) return '';
+  if (!isValidDate(dateString, createDate)) return '日期无效';
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const renderField = (value, mapping = null) => {
   if (value === undefined || value === null || value === '') return '-';
   if (mapping && mapping[value]) return mapping[value];
@@ -86,11 +110,11 @@ export default function ResumeDetail() {
           </Descriptions>
 
           {/* 工作信息部分 */}
-          <Descriptions bordered title="工作信息" style={{ marginBottom: 24 }}>
+          <Descriptions bordered title="工作信息" style={{ marginBottom: 24 }} column={2}>
             <Descriptions.Item label="工种">{renderField(data.type, mappings.type)}</Descriptions.Item>
             <Descriptions.Item label="接单状态">{renderField(data.orderStatus, mappings.orderStatus)}</Descriptions.Item>
             <Descriptions.Item label="期望薪资">{renderField(data.expectedSalary)}元</Descriptions.Item>
-            <Descriptions.Item label="服务区域">{renderField(data.serviceAddress)}</Descriptions.Item>
+            <Descriptions.Item label="接单地址">{renderField(data.serviceAddress)}</Descriptions.Item>
             <Descriptions.Item label="从业年限">{renderField(data.workExperienceYears)}年</Descriptions.Item>
             <Descriptions.Item label="技能标签" span={2}>
               {data.skills ? (
@@ -103,7 +127,7 @@ export default function ResumeDetail() {
                       fontSize: 12
                     }}>
                       {renderField(skill, {
-                        'maternal_care': '母婴护理师',
+                        'maternal_c care': '母婴护理师',
                         'lactation': '催乳',
                         'postpartum_meals': '月子餐',
                         'postpartum_recovery': '产后修复',
@@ -133,7 +157,13 @@ export default function ResumeDetail() {
               {data.workExperiences.map((exp, index) => (
                 <div key={index} style={{ marginBottom: 16 }}>
                   <Descriptions bordered>
-                    <Descriptions.Item label="工作时间">{renderField(exp.period)}</Descriptions.Item>
+                    <Descriptions.Item label="工作时间">
+                      {exp.period ? (
+                        <>
+                          {formatYearMonth(exp.period[0], data.createTime)} - {formatYearMonth(exp.period[1], data.createTime)}
+                        </>
+                      ) : '-'}
+                    </Descriptions.Item>
                     <Descriptions.Item label="工作内容" span={2}>
                       {renderField(exp.description)}
                     </Descriptions.Item>
@@ -144,11 +174,13 @@ export default function ResumeDetail() {
           )}
 
           {/* 文件信息部分 */}
-          <Descriptions bordered title="附件信息">
+          <Descriptions bordered title="附件信息" column={2}>
             <Descriptions.Item label="体检报告">{data.medicalReports ? '已上传' : '-'}</Descriptions.Item>
-            <Descriptions.Item label="体检日期">{renderField(data.medicalCheckDate)}</Descriptions.Item>
+            <Descriptions.Item label="体检日期">
+              {data.medicalCheckDate ? formatDate(data.medicalCheckDate, data.createTime) : '-'}
+            </Descriptions.Item>
             <Descriptions.Item label="个人照片">{data.photos ? '已上传' : '-'}</Descriptions.Item>
-            <Descriptions.Item label="资格证书">{data.certificates ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="技能证书">{data.certificates ? '已上传' : '-'}</Descriptions.Item>
           </Descriptions>
         </>
       )}
