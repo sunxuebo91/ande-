@@ -6,21 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.WorkersModule = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const resume_module_1 = require("./resume/resume.module");
-const workers_module_1 = require("./workers/workers.module");
-let AppModule = class AppModule {
+const workers_controller_1 = require("./workers.controller");
+const workers_service_1 = require("./workers.service");
+let WorkersModule = class WorkersModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.WorkersModule = WorkersModule;
+exports.WorkersModule = WorkersModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/resume_db'),
-            resume_module_1.ResumeModule,
-            workers_module_1.WorkersModule
-        ]
+        controllers: [workers_controller_1.WorkersController],
+        providers: [workers_service_1.WorkersService]
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], WorkersModule);
+//# sourceMappingURL=workers.module.js.map
