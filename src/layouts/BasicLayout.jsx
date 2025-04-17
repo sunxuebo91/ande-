@@ -2,7 +2,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { UserOutlined, TeamOutlined, FileTextOutlined } from '@ant-design/icons';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import ResumeList from '../pages/Worker/List.jsx';
 import Create from '../pages/Worker/Create.jsx';
 import ResumeDetail from '../pages/Worker/Detail.jsx';
@@ -10,6 +10,33 @@ import ResumeDetail from '../pages/Worker/Detail.jsx';
 const { Sider } = Layout;
 
 export default function BasicLayout() {
+  const navigate = useNavigate();
+  
+  const handleMenuClick = (key) => {
+    switch(key) {
+      case 'worker-list':
+        navigate('/worker/list');
+        break;
+      case 'worker-create':
+        navigate('/worker/create');
+        break;
+      case 'customer-list':
+        navigate('/customer/list');
+        break;
+      case 'customer-create':
+        navigate('/customer/create');
+        break;
+      case 'order-list':
+        navigate('/order/list');
+        break;
+      case 'order-create':
+        navigate('/order/create');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider width={220} theme="light">
@@ -32,11 +59,15 @@ export default function BasicLayout() {
               icon: <UserOutlined />,
               label: '劳动者管理',
               children: [
-                { key: 'worker-list', label: '简历列表' },
+                { 
+                  key: 'worker-list', 
+                  label: '简历列表',
+                  onClick: () => handleMenuClick('worker-list')
+                },
                 { 
                   key: 'worker-create', 
                   label: '创建简历',
-                  onClick: () => window.location.pathname = '/worker/create'
+                  onClick: () => handleMenuClick('worker-create')
                 }
               ]
             },
@@ -45,8 +76,16 @@ export default function BasicLayout() {
               icon: <TeamOutlined />,
               label: '客户管理',
               children: [
-                { key: 'customer-list', label: '客户列表' },
-                { key: 'customer-create', label: '创建客户' }
+                { 
+                  key: 'customer-list', 
+                  label: '客户列表',
+                  onClick: () => handleMenuClick('customer-list')
+                },
+                { 
+                  key: 'customer-create', 
+                  label: '创建客户',
+                  onClick: () => handleMenuClick('customer-create')
+                }
               ]
             },
             {
@@ -54,8 +93,16 @@ export default function BasicLayout() {
               icon: <FileTextOutlined />,
               label: '订单管理',
               children: [
-                { key: 'order-list', label: '订单列表' },
-                { key: 'order-create', label: '创建订单' }
+                { 
+                  key: 'order-list', 
+                  label: '订单列表',
+                  onClick: () => handleMenuClick('order-list')
+                },
+                { 
+                  key: 'order-create', 
+                  label: '创建订单',
+                  onClick: () => handleMenuClick('order-create')
+                }
               ]
             }
           ]}

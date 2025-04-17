@@ -26,15 +26,38 @@ export default function ResumeCreate() {
   const [previewImage, setPreviewImage] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const onFinish = (values) => {
-    console.log('Received values:', values);
-    // 生成8位随机简历编号
-    const resumeId = Math.floor(10000000 + Math.random() * 90000000).toString();
-    // 保存数据到localStorage
-    localStorage.setItem(`resume_${resumeId}`, JSON.stringify(values));
-    message.success(`简历创建成功，编号: ${resumeId}`);
-    // 跳转到简历详情页
-    window.location.href = `/worker/detail/${resumeId}`;
+  const onFinish = async (values) => {
+    try {
+      // 过滤掉空值和文件上传字段
+      const submitData = Object.fromEntries(
+        Object.entries(values).filter(
+          ([key, value]) => value !== undefined && 
+                         value !== null && 
+                         value !== '' &&
+                         !key.endsWith('Reports') &&
+                         !key.endsWith('photos') &&
+                         !key.endsWith('certificates')
+        )
+      );
+
+      const response = await fetch('http://localhost:3001/api/workers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+      });
+      
+      if (!response.ok) throw new Error('提交失败');
+      
+      const result = await response.json();
+      message.success('简历创建成功');
+      // 跳转到列表页并刷新
+      window.location.href = '/worker/list';
+    } catch (error) {
+      console.error('提交失败:', error);
+      message.error('提交失败: ' + error.message);
+    }
   };
 
   const handlePreview = async (file) => {
