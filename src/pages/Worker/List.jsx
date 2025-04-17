@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, Select, Table, Space, Spin } from 'antd';
 import { SearchOutlined, SyncOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -9,6 +10,7 @@ export default function ResumeList() {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   
   const fetchData = async () => {
     setLoading(true);
@@ -44,6 +46,11 @@ export default function ResumeList() {
       key: 'id',
       fixed: 'left',
       width: 80,
+      render: (id, record) => (
+        <a onClick={() => navigate(`/worker/detail/${id}`, { state: { workerData: record } })}>
+          {id}
+        </a>
+      ),
     },
     {
       title: '姓名',
