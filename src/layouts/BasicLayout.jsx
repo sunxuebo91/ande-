@@ -5,7 +5,6 @@ import { UserOutlined, TeamOutlined, FileTextOutlined } from '@ant-design/icons'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import ResumeList from '../pages/Worker/List.jsx';
 import Create from '../pages/Worker/Create.jsx';
-import ResumeDetail from '../pages/Worker/Detail.jsx';
 
 const { Sider } = Layout;
 
@@ -113,7 +112,6 @@ export default function BasicLayout() {
           <Routes>
             <Route path="/worker/list" element={<ResumeList />} />
             <Route path="/worker/create" element={<Create />} />
-            <Route path="/worker/detail/:id" element={<ResumeDetail />} />
             {/* 其他路由... */}
           </Routes>
         </div>

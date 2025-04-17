@@ -10,24 +10,41 @@ export default function ResumeList() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:3001/api/workers');
-        if (!response.ok) throw new Error('数据加载失败');
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('获取数据失败:', error);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      console.log('正在请求工作者数据...');
+      const response = await fetch('http://localhost:3001/api/workers');
+      console.log('响应状态:', response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`数据加载失败: ${response.status} - ${errorData}`);
       }
-    };
+      
+      const result = await response.json();
+      console.log('获取到的数据:', result);
+      setData(result);
+    } catch (error) {
+      console.error('获取数据失败:', error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
   const columns = [
+    {
+      title: '简历ID',
+      dataIndex: 'id',
+      key: 'id',
+      fixed: 'left',
+      width: 80,
+    },
     {
       title: '姓名',
       dataIndex: 'name',
@@ -127,7 +144,7 @@ export default function ResumeList() {
       
       {loading ? (
         <Spin style={{ display: 'block', margin: '40px auto' }} />
-      ) : (
+      ) : data?.length > 0 ? (
         <Table
           style={{ marginTop: 16 }}
           columns={columns}
@@ -135,6 +152,22 @@ export default function ResumeList() {
           rowKey="id"
           scroll={{ x: 1000 }}
         />
+      ) : (
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <img 
+            src="/empty-state.svg" 
+            alt="无数据" 
+            style={{ width: 120, opacity: 0.6, marginBottom: 16 }}
+          />
+          <p style={{ color: 'rgba(0,0,0,0.45)' }}>暂无工作者数据</p>
+          <Button 
+            type="link" 
+            onClick={() => fetchData()}
+            style={{ marginTop: 8 }}
+          >
+            重新加载
+          </Button>
+        </div>
       )}
     </Card>
   );

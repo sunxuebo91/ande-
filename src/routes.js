@@ -3,7 +3,6 @@ import { lazy } from 'react';
 import BasicLayout from './layouts/BasicLayout.jsx';
 import ResumeList from './pages/Worker/List.jsx';
 import Create from './pages/Worker/Create.jsx';
-import ResumeDetail from './pages/Worker/Detail.jsx';
 import CustomerList from './pages/Customer/List.jsx';
 import CustomerCreate from './pages/Customer/Create.jsx';
 import CustomerDetail from './pages/Customer/Detail.jsx';
@@ -24,10 +23,6 @@ const routes = [
       {
         path: '/worker/create',
         component: Create,
-      },
-      {
-        path: '/worker/detail/:id',
-        component: ResumeDetail,
       },
       {
         path: '/customer/list',
