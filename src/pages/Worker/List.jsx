@@ -42,13 +42,20 @@ export default function ResumeList() {
   const columns = [
     {
       title: '简历ID',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: '_id',
+      key: '_id',
       fixed: 'left',
-      width: 80,
+      width: 120,
       render: (id, record) => (
-        <a onClick={() => navigate(`/worker/detail/${id}`, { state: { workerData: record } })}>
-          {id}
+        <a onClick={() => navigate(`/worker/detail/${id}`, { 
+          state: { 
+            workerData: {
+              ...record,
+              id: record._id // 确保传递id字段
+            } 
+          } 
+        })}>
+          {id?.substring(0, 8)}
         </a>
       ),
     },
@@ -156,7 +163,7 @@ export default function ResumeList() {
           style={{ marginTop: 16 }}
           columns={columns}
           dataSource={data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 1000 }}
         />
       ) : (

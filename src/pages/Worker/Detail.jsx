@@ -127,7 +127,7 @@ export default function ResumeDetail() {
                       fontSize: 12
                     }}>
                       {renderField(skill, {
-                        'maternal_c care': '母婴护理师',
+                        'maternal_care': '母婴护理师',
                         'lactation': '催乳',
                         'postpartum_meals': '月子餐',
                         'postpartum_recovery': '产后修复',
@@ -172,6 +172,42 @@ export default function ResumeDetail() {
               ))}
             </Card>
           )}
+
+          {/* 身份证照片部分 */}
+          <Card title="身份证照片" style={{ marginBottom: 24 }}>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Card title="人像面" size="small">
+                  {data.idCard?.front ? (
+                    <img 
+                      src={data.idCard.front} 
+                      alt="身份证人像面" 
+                      style={{ width: '100%', maxHeight: 300, objectFit: 'contain' }}
+                    />
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '40px 0', color: 'rgba(0,0,0,0.45)' }}>
+                      未上传人像面照片
+                    </div>
+                  )}
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card title="国徽面" size="small">
+                  {data.idCard?.back ? (
+                    <img 
+                      src={data.idCard.back} 
+                      alt="身份证国徽面" 
+                      style={{ width: '100%', maxHeight: 300, objectFit: 'contain' }}
+                    />
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '40px 0', color: 'rgba(0,0,0,0.45)' }}>
+                      未上传国徽面照片
+                    </div>
+                  )}
+                </Card>
+              </Col>
+            </Row>
+          </Card>
 
           {/* 文件信息部分 */}
           <Descriptions bordered title="附件信息" column={2}>

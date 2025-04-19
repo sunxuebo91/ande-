@@ -62,6 +62,58 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Array, default: [] }),
     __metadata("design:type", Array)
 ], Worker.prototype, "workExperiences", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "registeredAddress", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "education", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "constellation", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "zodiac", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "ethnicity", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "wechat", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "idCard", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "birthday", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "marriage", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "religion", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "hometown", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Worker.prototype, "serviceAddress", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: 'accepting' }),
+    __metadata("design:type", String)
+], Worker.prototype, "orderStatus", void 0);
 exports.Worker = Worker = __decorate([
     (0, mongoose_1.Schema)()
 ], Worker);

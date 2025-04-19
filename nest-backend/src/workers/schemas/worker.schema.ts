@@ -41,6 +41,45 @@ export class Worker {
 
   @Prop({ type: Array, default: [] })
   workExperiences: Array<{ period: string[]; description: string }>;
+
+  @Prop()
+  registeredAddress: string;
+
+  @Prop()
+  education: string;
+
+  @Prop()
+  constellation: string;
+
+  @Prop()
+  zodiac: string;
+
+  @Prop()
+  ethnicity: string;
+
+  @Prop()
+  wechat: string;
+
+  @Prop()
+  idCard: string;
+
+  @Prop()
+  birthday: string;
+
+  @Prop()
+  marriage: string;
+
+  @Prop()
+  religion: string;
+
+  @Prop()
+  hometown: string;
+
+  @Prop()
+  serviceAddress: string;
+
+  @Prop({ default: 'accepting' })
+  orderStatus: string;
 }
 
 export const WorkerSchema = SchemaFactory.createForClass(Worker);

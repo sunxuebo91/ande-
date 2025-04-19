@@ -32,6 +32,15 @@ let WorkersService = class WorkersService {
     constructor(workerModel) {
         this.workerModel = workerModel;
     }
+    async findAll() {
+        return this.workerModel.find().exec();
+    }
+    async update(id, updateData) {
+        return this.workerModel.findByIdAndUpdate(id, { $set: updateData }, { new: true }).exec();
+    }
+    async findOne(id) {
+        return this.workerModel.findById(id).exec();
+    }
     async create(workerData) {
         const { attachments } = workerData, workerInfo = __rest(workerData, ["attachments"]);
         const newWorker = Object.assign(Object.assign({}, workerInfo), { medicalReports: [], photos: [], certificates: [] });
@@ -57,9 +66,6 @@ let WorkersService = class WorkersService {
         }
         const createdWorker = new this.workerModel(newWorker);
         return createdWorker.save();
-    }
-    async findAll() {
-        return this.workerModel.find().exec();
     }
 };
 exports.WorkersService = WorkersService;

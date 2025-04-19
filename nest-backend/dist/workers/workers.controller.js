@@ -25,6 +25,12 @@ let WorkersController = class WorkersController {
     findAll() {
         return this.workersService.findAll();
     }
+    findOne(id) {
+        return this.workersService.findOne(id);
+    }
+    update(id, updateData) {
+        return this.workersService.update(id, updateData);
+    }
     create(files, workerData) {
         const filePaths = (files === null || files === void 0 ? void 0 : files.map(file => ({
             originalname: file.originalname,
@@ -43,6 +49,21 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WorkersController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], WorkersController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], WorkersController.prototype, "update", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 20, {

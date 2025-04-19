@@ -25,6 +25,19 @@ export declare class Worker {
         period: string[];
         description: string;
     }>;
+    registeredAddress: string;
+    education: string;
+    constellation: string;
+    zodiac: string;
+    ethnicity: string;
+    wechat: string;
+    idCard: string;
+    birthday: string;
+    marriage: string;
+    religion: string;
+    hometown: string;
+    serviceAddress: string;
+    orderStatus: string;
 }
 export declare const WorkerSchema: import("mongoose").Schema<Worker, import("mongoose").Model<Worker, any, any, any, Document<unknown, any, Worker> & Worker & {
     _id: import("mongoose").Types.ObjectId;

@@ -10,6 +10,21 @@ export class WorkersService {
     @InjectModel(Worker.name) private workerModel: Model<WorkerDocument>
   ) {}
 
+  async findAll(): Promise<Worker[]> {
+    return this.workerModel.find().exec();
+  }
+
+  async update(id: string, updateData: any): Promise<Worker> {
+    return this.workerModel.findByIdAndUpdate(
+      id, 
+      { $set: updateData },
+      { new: true }
+    ).exec();
+  }
+  async findOne(id: string): Promise<Worker> {
+    return this.workerModel.findById(id).exec();
+  }
+
   async create(workerData) {
     // 处理附件数据
     const { attachments, ...workerInfo } = workerData;
@@ -55,7 +70,4 @@ export class WorkersService {
     return createdWorker.save();
   }
 
-  async findAll() {
-    return this.workerModel.find().exec();
-  }
 }

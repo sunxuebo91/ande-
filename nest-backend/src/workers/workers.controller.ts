@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors, UploadedFiles, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, UseInterceptors, UploadedFiles, Body, Param } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { WorkersService } from './workers.service';
 import { diskStorage } from 'multer';
@@ -12,6 +12,16 @@ export class WorkersController {
   @Get()
   findAll() {
     return this.workersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.workersService.findOne(id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateData) {
+    return this.workersService.update(id, updateData);
   }
 
   @Post()
