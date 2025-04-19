@@ -1,5 +1,4 @@
 import { WorkersService } from './workers.service';
-import { Express } from 'express';
 export declare class WorkersController {
     private readonly workersService;
     constructor(workersService: WorkersService);

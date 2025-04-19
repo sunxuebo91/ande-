@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Card } from 'antd';
 import { UploadOutlined, CloseOutlined, LoadingOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { compressImage } from '@/utils/imageCompressor';
 
 export default function IDUploader(props) {
   const [files, setFiles] = useState({
@@ -12,38 +13,6 @@ export default function IDUploader(props) {
     front: false,
     back: false
   });
-  const compressImage = async (file, side) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    return new Promise(resolve => {
-      reader.onload = async e => {
-        const img = new Image();
-        img.src = e.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          let width = img.width;
-          let height = img.height;
-
-          // 限制最大宽度800px
-          if (width > 800) {
-            height = height * (800 / width);
-            width = 800;
-          }
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-          canvas.toBlob(blob => {
-            if (blob.size > 200000) {
-              canvas.toBlob(newBlob => resolve(newBlob), 'image/jpeg', 0.6);
-            } else {
-              resolve(blob);
-            }
-          }, 'image/jpeg', 0.8);
-        };
-      };
-    });
-  };
   const handleUpload = async (e, side) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -56,7 +25,7 @@ export default function IDUploader(props) {
       [side]: true
     }));
     try {
-      const compressedBlob = await compressImage(file, side);
+      const compressedBlob = await compressImage(file);
       const previewUrl = URL.createObjectURL(compressedBlob);
       setFiles(prev => ({
         ...prev,
