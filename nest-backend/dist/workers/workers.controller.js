@@ -14,7 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkersController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const workers_service_1 = require("./workers.service");
+const multer_1 = require("multer");
+const path_1 = require("path");
 let WorkersController = class WorkersController {
     constructor(workersService) {
         this.workersService = workersService;
@@ -22,8 +25,15 @@ let WorkersController = class WorkersController {
     findAll() {
         return this.workersService.findAll();
     }
-    create(workerData) {
-        return this.workersService.create(workerData);
+    create(files, workerData) {
+        const filePaths = (files === null || files === void 0 ? void 0 : files.map(file => ({
+            originalname: file.originalname,
+            filename: file.filename,
+            path: file.path,
+            size: file.size,
+            mimetype: file.mimetype
+        }))) || [];
+        return this.workersService.create(Object.assign(Object.assign({}, workerData), { attachments: filePaths }));
     }
 };
 exports.WorkersController = WorkersController;
@@ -35,9 +45,19 @@ __decorate([
 ], WorkersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 20, {
+        storage: (0, multer_1.diskStorage)({
+            destination: '/home/ubuntu/comate-zulu-demo/nest-backend/uploads',
+            filename: (req, file, cb) => {
+                const randomName = Array(32).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('');
+                return cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
+            }
+        })
+    })),
+    __param(0, (0, common_1.UploadedFiles)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Array, Object]),
     __metadata("design:returntype", void 0)
 ], WorkersController.prototype, "create", null);
 exports.WorkersController = WorkersController = __decorate([

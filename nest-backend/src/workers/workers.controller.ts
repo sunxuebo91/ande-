@@ -1,5 +1,9 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, UploadedFiles, Body } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { WorkersService } from './workers.service';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { Express } from 'express';
 
 @Controller('workers')
 export class WorkersController {
@@ -11,7 +15,31 @@ export class WorkersController {
   }
 
   @Post()
-  create(@Body() workerData) {
-    return this.workersService.create(workerData);
+  @UseInterceptors(FilesInterceptor('files', 20, {
+    storage: diskStorage({
+      destination: '/home/ubuntu/comate-zulu-demo/nest-backend/uploads',
+      filename: (req, file, cb) => {
+        const randomName = Array(32).fill(null).map(() => Math.round(Math.random() * 16).toString(16)).join('');
+        return cb(null, `${randomName}${extname(file.originalname)}`);
+      }
+    })
+  }))
+  create(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() workerData
+  ) {
+    // 处理上传的文件
+    const filePaths = files?.map(file => ({
+      originalname: file.originalname,
+      filename: file.filename,
+      path: file.path,
+      size: file.size,
+      mimetype: file.mimetype
+    })) || [];
+
+    return this.workersService.create({
+      ...workerData,
+      attachments: filePaths
+    });
   }
 }

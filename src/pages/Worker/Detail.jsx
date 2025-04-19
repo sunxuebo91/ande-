@@ -175,12 +175,38 @@ export default function ResumeDetail() {
 
           {/* 文件信息部分 */}
           <Descriptions bordered title="附件信息" column={2}>
-            <Descriptions.Item label="体检报告" span={1}>{data.medicalReports ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="体检报告" span={1}>
+              {data.medicalReports ? (
+                <a href={data.medicalReports.url} target="_blank" rel="noopener noreferrer">
+                  {data.medicalReports.name || '查看报告'}
+                </a>
+              ) : '-'}
+            </Descriptions.Item>
             <Descriptions.Item label="体检日期" span={1}>
               {data.medicalCheckDate ? formatDate(data.medicalCheckDate, data.createTime) : '-'}
             </Descriptions.Item>
-            <Descriptions.Item label="个人照片" span={1}>{data.photos ? '已上传' : '-'}</Descriptions.Item>
-            <Descriptions.Item label="技能证书" span={1}>{data.certificates ? '已上传' : '-'}</Descriptions.Item>
+            <Descriptions.Item label="个人照片" span={1}>
+              {data.photos ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {data.photos.map((photo, index) => (
+                    <a key={index} href={photo.url} target="_blank" rel="noopener noreferrer">
+                      {photo.name || `照片${index + 1}`}
+                    </a>
+                  ))}
+                </div>
+              ) : '-'}
+            </Descriptions.Item>
+            <Descriptions.Item label="技能证书" span={1}>
+              {data.certificates ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {data.certificates.map((cert, index) => (
+                    <a key={index} href={cert.url} target="_blank" rel="noopener noreferrer">
+                      {cert.name || `证书${index + 1}`}
+                    </a>
+                  ))}
+                </div>
+              ) : '-'}
+            </Descriptions.Item>
           </Descriptions>
         </>
       )}

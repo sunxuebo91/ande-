@@ -1,17 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
+const path_1 = require("path");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, {
+        logger: ['error', 'warn', 'log', 'debug', 'verbose']
+    });
+    app.useStaticAssets((0, path_1.join)(__dirname, '..', 'uploads'), {
+        prefix: '/uploads/',
+    });
     app.setGlobalPrefix('api');
     app.enableCors({
-        origin: 'http://localhost:3000',
+        origin: true,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true,
+        allowedHeaders: 'Content-Type,Authorization',
+        credentials: true
     });
     await app.listen(3001);
-    console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

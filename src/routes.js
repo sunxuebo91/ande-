@@ -60,6 +60,10 @@ const routes = [
         path: '/resumes/:id',
         component: lazy(() => import('./pages/Resume/Detail.jsx')),
       },
+      {
+        path: '/worker/detail/:id',
+        component: lazy(() => import('./pages/Worker/Detail.jsx')),
+      },
       // 其他功能路由将在此添加
     ],
   },

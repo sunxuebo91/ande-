@@ -28,24 +28,32 @@ export default function ResumeCreate() {
 
   const onFinish = async (values) => {
     try {
-      // 过滤掉空值和文件上传字段
-      const submitData = Object.fromEntries(
-        Object.entries(values).filter(
-          ([key, value]) => value !== undefined && 
-                         value !== null && 
-                         value !== '' &&
-                         !key.endsWith('Reports') &&
-                         !key.endsWith('photos') &&
-                         !key.endsWith('certificates')
-        )
-      );
+      // 准备表单数据
+      const formData = new FormData();
+      
+      // 添加普通字段
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          // 处理文件上传字段 - 统一使用files字段
+          if (key === 'medicalReports' || key === 'photos' || key === 'certificates') {
+            if (Array.isArray(value)) {
+              value.forEach(file => {
+                if (file.originFileObj) {
+                  formData.append('files', file.originFileObj);
+                }
+              });
+            }
+          } 
+          // 处理普通字段
+          else {
+            formData.append(key, value);
+          }
+        }
+      });
 
       const response = await fetch('http://localhost:3001/api/workers', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData)
+        body: formData
       });
       
       if (!response.ok) throw new Error('提交失败');
